@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html decode="UTF-8">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript">
+        var socket;
+        if (typeof (WebSocket) == "undefined") {
+            console.log("no support WebSocket");
+        } else {
+            console.log("support WebSocket");
+            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+            socket = new WebSocket("ws://localhost:8081/websocket/1");
+            //打开事件
+            socket.onopen = function () {
+                console.log("Socket opened");
+                socket.send("this c msg" + location.href + new Date());
+            };
+            //获得消息事件
+            socket.onmessage = function (msg) {
+                console.log(msg.data);
+            };
+            //关闭事件
+            socket.onclose = function () {
+                console.log("Socket closed");
+            };
+            //发生了错误事件
+            socket.onerror = function () {
+                alert("Socket error");
+            }
+        }
+    </script>
+</head>
+</html>
